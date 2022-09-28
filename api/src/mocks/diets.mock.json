@@ -1,0 +1,43 @@
+[
+  {
+    "id": 1,
+    "name": "gluten free"
+  },
+  {
+    "id": 2,
+    "name": "ketogenic"
+  },
+  {
+    "id": 3,
+    "name": "lacto ovo vegetarian"
+  },
+  {
+    "id": 4,
+    "name": "vegan"
+  },
+  {
+    "id": 5,
+    "name": "pescatarian"
+  },
+  {
+    "id": 6,
+    "name": "paleolithic"
+  },
+  {
+    "id": 7,
+    "name": "primal"
+  },
+  {
+    "id": 8,
+    "name": "whole 30"
+  },
+  {
+    "id": 9,
+    "name": "vegetarian"
+  },
+  {
+    "id": 10,
+    "name": "low fod map"
+  }
+
+]

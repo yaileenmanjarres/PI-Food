@@ -1,0 +1,15 @@
+.views-container {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: 80%;
+}
+
+.views {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  background-color: antiquewhite;
+  height: 600px;
+  width: 600px;
+}
+

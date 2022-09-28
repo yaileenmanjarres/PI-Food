@@ -1,0 +1,80 @@
+.form-container {
+  height: 100%;
+  display: flex;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+
+/* .form-container-hidden {
+  display: none;
+} */
+
+#opacity {
+  background-color: rgba(0, 0, 0, 0.4);
+  height: 100%;
+  width: 100%;
+}
+
+.removable {
+  background-color: white;
+  padding: 25px 20px;
+}
+
+#form {
+  width: 310px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+#title {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+form {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+form input {
+  border: none;
+  background-color: rgb(230, 230, 230);
+  border-radius: 5px;
+  height: 25px;
+  padding-left: 8px;
+}
+
+form input:focus {
+  outline: 1px solid rgb(4, 170,109);
+}
+
+#close-icon {
+  text-align: right;
+  padding-right: 8px;
+  cursor: pointer;
+}
+
+#close-icon:hover {
+  color: rgb(4, 170,109);
+}
+
+#save-button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
+}

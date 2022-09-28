@@ -1,0 +1,29 @@
+.footer-container {
+  background-color: black;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: 6%;
+}
+
+.footer {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  max-width: 850px;
+}
+
+.footer-copy { 
+  color: white;
+}
+
+#apps {
+  display: flex;
+  column-gap: 15px;
+}
+
+.logo-app {
+  font-size: 20px;
+  color: white;
+}
