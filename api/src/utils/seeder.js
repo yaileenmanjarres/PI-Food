@@ -13,6 +13,7 @@ async function getRecipes() {
     const recipes = response.data.results.map(recipe => {
       return ({
         id: recipe.id.toString(),
+        type: 'db',
         name: recipe.title,
         summary: recipe.summary,
         healthScore: recipe.healthScore,
