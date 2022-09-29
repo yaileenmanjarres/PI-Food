@@ -83,6 +83,7 @@ router.post('/recipes', async (req, res) => {
   const newId = `C-${count}`
   const createdRecipe = await Recipe.create({
     id: newId,
+    type: 'db',
     name,
     summary,
     healthScore,
