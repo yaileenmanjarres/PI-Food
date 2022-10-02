@@ -7,9 +7,9 @@
 
 .views {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  background-color: antiquewhite;
-  height: 600px;
-  width: 600px;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 1280px;
+  row-gap: 14px;
+  column-gap: 14px;
 }
 

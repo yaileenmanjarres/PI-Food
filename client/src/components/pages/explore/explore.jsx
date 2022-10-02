@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from 'react-redux';
+import { getAllRecipes } from '../../../redux/actions/actions'
 import './explore.css'
 import Navbar from '../../navbar/navbar'
 import Filters from '../../filters/filters'
@@ -7,21 +9,56 @@ import Pagination from '../../pagination/pagination'
 import Footer from '../../footer/footer'
 //import Form from "../../form/form";
 
-const pages = [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-  11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-  21, 22, 23, 24, 25
-]
-
-
 class Explore extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentPage: 1,
+      allRecipes: this.props.recipes
+    }
+  }
+
+  componentDidMount() {
+    this.props.getAllRecipes()
+  }
+
+  changePage(page) {
+    this.setState(state => ({
+      ...state,
+      currentPage: page
+    }))
+  }
+
+  update(recipes) {
+    this.setState(state => ({
+      ...state,
+      allRecipes: recipes
+    }))
+  }
+
+  handlePagesClick(clicked) {
+
+    if (clicked === 1) {
+      // setShownCountries(allCountries.slice(0, 10));
+    } else {
+      // setShownCountries(allCountries.slice((10 * clicked) - 10, 10 * clicked));
+    }
+  }
+
   render() {
+    console.log(this);
+    const numberOfPages = Math.ceil(this.props.recipes.length / 9)
     return (
       <div id="main">
+        <div>
+          {
+            this.state.currentPage
+          }
+        </div>
         <Navbar />
         <Filters />
         <Views />
-        <Pagination pages={pages}/>
+        <Pagination pages={numberOfPages} changePage={this.changePage.bind(this)} />
         <Footer />
         {/* <Form /> */}
       </div>
@@ -29,4 +66,14 @@ class Explore extends React.Component {
   }
 }
 
-export default Explore;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getAllRecipes: () => dispatch(getAllRecipes())
+  }
+};
+
+export const mapStateToProps = (state) => {
+  return { recipes: state.recipes }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Explore);

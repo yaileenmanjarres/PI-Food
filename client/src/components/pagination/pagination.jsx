@@ -1,14 +1,17 @@
 import './pagination.css';
 
-function Pagination({ pages = []}) {
-  // const { arrayX = []} = props
-  // const pages = props.arrayX || []
+function Pagination({ pages = 0, changePage}) {
+  let numberOfPages = []
+
+  for (let i = 1; i <= pages; i++) {
+    numberOfPages.push(i)
+  }
 
   return (
     <div className='pagination-container'>
       {
-        pages.map((page) => (
-          <span className='pagination' onClick={() => console.log(page)} key={page} > {page}
+        numberOfPages.map((page) => (
+          <span className='pagination' onClick={() => changePage(page)} key={page} > {page}
           </span>
         ))
       }

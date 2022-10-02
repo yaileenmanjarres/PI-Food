@@ -1,14 +1,14 @@
 const axios = require('axios')
 const { conn } = require('../db');
 const { Recipe, Diet, RecipesDiets } = conn.models;
-const { RECIPES_API } = process.env;
+const { API_BASE_URL, API_KEY } = process.env;
 const mockDiets = require('../mocks/diets.mock.json');
 const mockRecipes = require('../mocks/recipes.mock.json');
 
 
 async function getRecipes() {
   try {
-    // const response = await axios.get(RECIPES_API);
+    // const response = await axios.get(`${API_BASE_URL}/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`);
     const response = mockRecipes;
     const recipes = response.data.results.map(recipe => {
       return ({
@@ -18,7 +18,8 @@ async function getRecipes() {
         summary: recipe.summary,
         healthScore: recipe.healthScore,
         steps: recipe.analyzedInstructions[0] ? recipe.analyzedInstructions[0].steps : [],
-        diets: recipe.diets
+        diets: recipe.diets,
+        image: recipe.image
       })
     })
     return recipes
