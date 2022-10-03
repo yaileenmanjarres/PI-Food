@@ -1,6 +1,6 @@
 import './pagination.css';
 
-function Pagination({ pages = 0, changePage}) {
+function Pagination({ pages = 0, changePage, currentPage }) {
   let numberOfPages = []
 
   for (let i = 1; i <= pages; i++) {
@@ -11,7 +11,12 @@ function Pagination({ pages = 0, changePage}) {
     <div className='pagination-container'>
       {
         numberOfPages.map((page) => (
-          <span className='pagination' onClick={() => changePage(page)} key={page} > {page}
+          <span
+            className={`pagination ${page === currentPage ? 'active-page' : ''}`}
+            onClick={() => changePage(page)}
+            key={page}
+          >
+            {page}
           </span>
         ))
       }

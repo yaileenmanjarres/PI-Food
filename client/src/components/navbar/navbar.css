@@ -20,6 +20,7 @@
   display: flex;
   column-gap: 4px;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .logo-icon {

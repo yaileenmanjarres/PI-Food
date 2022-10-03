@@ -1,10 +1,10 @@
 import {
   GET_ALL_RECIPES,
   GET_RECIPE_BY_NAME,
-  // GET_RECIPE_BY_ID,
   SHOW_CREATE_RECIPES,
   // POST_CREATE_RECIPE,
-  // GET_ALL_DIETS,
+  // GET_RECIPE_BY_ID,
+  GET_ALL_DIETS,
 } from '../actions/actions'
 
 const initialState = {
@@ -17,11 +17,6 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SHOW_CREATE_RECIPES:
-      return {
-        ...state,
-        showCreateRecipes: !action.payload
-      }
     case GET_ALL_RECIPES:
       return {
         ...state,
@@ -31,6 +26,16 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         recipes: action.payload
+      }
+    case SHOW_CREATE_RECIPES:
+      return {
+        ...state,
+        showCreateRecipes: action.payload
+      }
+    case GET_ALL_DIETS:
+      return {
+        ...state,
+        diets: action.payload
       }
     default:
       return state
