@@ -1,3 +1,9 @@
+#opacity {
+  background-color: rgba(0, 0, 0, 0.4);
+  height: 100%;
+  width: 100%;
+}
+
 .form-container {
   height: 100%;
   width: 100%;
@@ -5,12 +11,6 @@
   position: absolute;
   top: 0;
   bottom: 0;
-}
-
-#opacity {
-  background-color: rgba(0, 0, 0, 0.4);
-  height: 100%;
-  width: 100%;
 }
 
 .removable {
@@ -27,7 +27,7 @@
   height: 100%;
 }
 
-#title {
+#form-title {
   display: flex;
   justify-content: space-between;
   font-weight: bold;
@@ -39,7 +39,20 @@ form {
   text-align: left;
   display: flex;
   flex-direction: column;
-  row-gap: 8px;
+  row-gap: 10px;
+}
+
+.label-validation {
+  display: flex;
+  justify-content: space-between;
+}
+
+.validation-msg {
+  font-size:xx-small;
+}
+
+label {
+  font-size: var(--text-subtitle);
 }
 
 form input {
@@ -49,6 +62,7 @@ form input {
   height: 25px;
   padding-left: 8px;
 }
+
 form textarea {
   border: none;
   background-color: var(--quaternary-color);
@@ -79,7 +93,10 @@ form input:focus {
   padding: 10px 20px;
   border-radius: 12px;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  cursor: pointer;
+}
+
+.button-disabled  {
+  opacity: .6;
 }
 
 .diet-selector {
@@ -92,8 +109,8 @@ form input:focus {
 .diet-selector span {
   display: flex;
   align-items: center;
-  color: rgb(221, 221, 221);
-  font-size: var(--text-title);
+  color: rgb(183, 183, 183);
+  font-size: var(--text-subtitle);
 }
 
 .steps-container {
@@ -122,4 +139,8 @@ form input:focus {
   font-weight: bold;
   font-size: var(--text-subtitle);
   color: var(--primary-color);
+}
+
+.textarea {
+  resize: none;
 }

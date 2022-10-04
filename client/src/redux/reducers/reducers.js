@@ -2,9 +2,9 @@ import {
   GET_ALL_RECIPES,
   GET_RECIPE_BY_NAME,
   SHOW_CREATE_RECIPES,
+  GET_ALL_DIETS,
   // POST_CREATE_RECIPE,
   // GET_RECIPE_BY_ID,
-  GET_ALL_DIETS,
 } from '../actions/actions'
 
 const initialState = {

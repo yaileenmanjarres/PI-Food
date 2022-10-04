@@ -28,6 +28,7 @@
 .card-title {
   font-size: var(--text-title);
   font-weight: bold;
+  color: black;
 }
 
 .card-list {
@@ -37,6 +38,10 @@
   column-gap: 4px;
   row-gap: 4px;
   flex-flow: row wrap;
+}
+
+.styled-link {
+  text-decoration: none;
 }
 
 /* diest styles */
