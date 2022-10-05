@@ -3,29 +3,34 @@
   height: 100vh;
   position: relative;
   background-image: url(../../../assest/cover.jpeg);
+  background-repeat: no-repeat;
 }
 
 .title {
   padding-right: 20px;
   padding-top: 10px;
-  color: white;
+  color: var(--primary-color);
   text-align: right;
   font-weight: bold;
-  opacity: .5;
 }
 
 .button {
-  background-color: blue;
+  background-color: var(--primary-color);
   border: none;
   color: white;
   font-weight: bold;
   padding: 20px 36px;
   border-radius: 12px;
-  position: absolute;
-  bottom: 20px;
   transform: translate(-50%, -50%);
   box-shadow: 0 8px 16px 0 rgba(227, 222, 222, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   font-size: 24px;
+}
+
+.button-container {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .button span {

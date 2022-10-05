@@ -7,7 +7,10 @@ class Cover extends React.Component {
     return (
       <div className="container">
         <div className='title'> PI - Yaileen Manjarrés</div>
+        <div className="button-container">
+
         <Link to="/explore" className='button'> <span> EXPLORE </span> </Link>
+        </div>
       </div>
     )
   }

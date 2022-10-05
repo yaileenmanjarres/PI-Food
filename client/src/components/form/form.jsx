@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { showCreateRecipes, postCreateRecipe } from '../../redux/actions/actions'
+import { postCreateRecipe } from '../../redux/actions/actions'
+import { Link, useHistory } from "react-router-dom"
 import './form.css'
 
 const template = {
@@ -9,12 +10,14 @@ const template = {
 }
 
 function Form() {
+  const history = useHistory()
   const dispatch = useDispatch()
   const allDiets = useSelector(state => state.diets)
   const [newSteps, setNewSteps] = useState([])
   const [fields, setFields] = useState({
     type: 'db',
     name: '',
+    image: '',
     summary: '',
     healthScore: 0,
     steps: [],
@@ -26,9 +29,15 @@ function Form() {
     setNewSteps(state => state.concat([template]))
   }
 
+  const onSave = (event) => {
+    event.preventDefault()
+    dispatch(postCreateRecipe(fields))
+    setTimeout(() => history.push('/explore'), 300)
+  }
+
   const handleFormChange = (event) => {
     const property = event.target.id
-    if (['name', 'summary', 'healthScore'].includes(property)) {
+    if (['name', 'image', 'summary', 'healthScore'].includes(property)) {
       setFields(state => ({
         ...state,
         [property]: property === 'healthScore' ? parseInt(event.target.value) : event.target.value
@@ -63,13 +72,8 @@ function Form() {
     )
   }
 
-  const onSave = () => {
-    dispatch(postCreateRecipe(fields))
-    dispatch(showCreateRecipes(false))
-  }
-
   return (
-    <div className='form-container form-container-hidden' >
+    <div className='form-container' >
       <div id='opacity' />
       <div className='removable'>
         <div id='form'>
@@ -77,9 +81,12 @@ function Form() {
             <span >
               Create Recipe
             </span>
-            <span id='close-icon' onClick={() => dispatch(showCreateRecipes(false))}>
-              ✖
-            </span>
+            <Link to={'/explore'}>
+              <span id='close-icon'>
+                ✖
+              </span>
+            </Link>
+
           </div>
 
           <form onChange={handleFormChange}>
@@ -90,6 +97,14 @@ function Form() {
               }
             </div>
             <input type="text" id='name' />
+            <div className="label-validation">
+
+              <label> Image:</label>
+              {
+                fields.image.length === 0 ? <span className="validation-msg">required image URL</span> : null
+              }
+            </div>
+            <input type="text" id='image' />
 
             <div className="label-validation">
               <label>Summary:</label>
@@ -97,7 +112,7 @@ function Form() {
                 fields.summary.length === 0 ? <span className="validation-msg">required summary</span> : null
               }
             </div>
-            <textarea rows={5} className='textarea' id="summary" />
+            <textarea rows={3} className='textarea' id="summary" />
 
             <div className="label-validation">
               <label>Health score:</label>
@@ -147,7 +162,14 @@ function Form() {
               }
             </div>
           </form >
-          <button id='save-button' className={`${!disableSaveButton() ? 'button-disabled' : ''}`} onClick={onSave} disabled={!disableSaveButton()}>Save</button>
+          <Link to={'/explore'}
+            id='save-button'
+            className={`${!disableSaveButton() ? 'button-disabled' : ''}`}
+            disabled={!disableSaveButton()}
+            onClick={onSave}
+          >
+            Save
+          </Link>
         </div>
       </div>
     </div>

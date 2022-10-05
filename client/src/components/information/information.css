@@ -1,0 +1,39 @@
+
+.opacity-information {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.4);
+  height: 100%;
+  width: 100%;
+}
+
+.information {
+  display: block;
+  align-items: center;
+  justify-content: center;
+  height: 700px;
+  width: 980px;
+  background-color: white;
+  border-radius: 5px;
+ padding: 20px;
+}
+
+.title-detail {
+  height: 50px;
+  width: 500px;
+  background-color: red;
+}
+
+.image-detail {
+  height: 200px;
+  width: 300px;
+  background-color: blue;
+}
+
+.diets-detail {
+  height: 100px;
+  width: 300px;
+  background-color: green;
+}

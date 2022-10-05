@@ -1,17 +1,20 @@
 import {
   GET_ALL_RECIPES,
   GET_RECIPE_BY_NAME,
-  SHOW_CREATE_RECIPES,
   GET_ALL_DIETS,
-  // POST_CREATE_RECIPE,
-  // GET_RECIPE_BY_ID,
+  GET_RECIPE_BY_ID,
+  SET_CURRENT_FILTERS
 } from '../actions/actions'
 
 const initialState = {
   recipes: [],
   selectedRecipe: {},
-  showCreateRecipes: false,
   diets: [],
+  currentFilters: {
+    alphabetically: 'none',
+    healthScore: 'none',
+    diet: 'all'
+  }
 }
 
 
@@ -27,15 +30,20 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         recipes: action.payload
       }
-    case SHOW_CREATE_RECIPES:
-      return {
-        ...state,
-        showCreateRecipes: action.payload
-      }
     case GET_ALL_DIETS:
       return {
         ...state,
         diets: action.payload
+      }
+    case GET_RECIPE_BY_ID:
+      return {
+        ...state,
+        selectedRecipe: action.payload
+      }
+    case SET_CURRENT_FILTERS:
+      return {
+        ...state,
+        currentFilters: action.payload
       }
     default:
       return state

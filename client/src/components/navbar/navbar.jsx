@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux"
-import { getRecipeByName, getAllRecipes, showCreateRecipes } from '../../redux/actions/actions'
+import { Link } from "react-router-dom";
+import { getRecipeByName, getAllRecipes} from '../../redux/actions/actions'
 import './navbar.css';
 
 function Navbar() {
@@ -41,11 +42,11 @@ function Navbar() {
         </form>
 
         {/* button */}
-        <span >
-          <button id='button-create' onClick={() => dispatch(showCreateRecipes(true))}>
+        <Link to={'/explore/create-recipe'}>
+          <button id='button-create'>
             NEW RECIPE
           </button>
-        </span>
+        </Link>
       </nav>
     </div>
   )

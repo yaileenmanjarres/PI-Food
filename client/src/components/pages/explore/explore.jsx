@@ -5,6 +5,7 @@ import './explore.css'
 import Navbar from '../../navbar/navbar'
 import Filters from '../../filters/filters'
 import Views from '../../views/views'
+import Modal from '../../information/information'
 import Pagination from '../../pagination/pagination'
 import Footer from '../../footer/footer'
 import Form from "../../form/form";
@@ -28,12 +29,16 @@ class Explore extends React.Component {
 
   render() {
     const numberOfPages = Math.ceil(this.props.recipes.length / 9)
+    const showModal = this.props.showModal
 
     return (
       <div id="main">
         <Navbar />
         <Filters />
         <Views currentPage={this.state.currentPage} />
+        {
+          showModal && <Modal />
+        }
         <Pagination pages={numberOfPages} changePage={this.changePage.bind(this)} currentPage={this.state.currentPage} />
         <Footer />
         {this.props.showCreateRecipes && <Form />}
@@ -52,7 +57,8 @@ const mapDispatchToProps = (dispatch) => {
 export const mapStateToProps = (state) => {
   return {
     recipes: state.recipes,
-    showCreateRecipes: state.showCreateRecipes
+    showCreateRecipes: state.showCreateRecipes,
+    showModal: state.showModal
   }
 };
 

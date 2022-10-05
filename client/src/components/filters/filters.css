@@ -20,3 +20,11 @@ select {
   /* position: absolute;
   top: 0; */
 }
+
+.filter {
+  display: flex;
+  column-gap: 20px;
+  color: var(--primary-color);
+  font-size: var(--text-title);
+  font-weight: bold;
+}

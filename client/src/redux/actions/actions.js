@@ -1,10 +1,10 @@
 const axios = require('axios')
 export const GET_ALL_RECIPES = "GET_ALL_RECIPES";
 export const GET_RECIPE_BY_NAME = "GET_RECIPE_BY_NAME";
-export const SHOW_CREATE_RECIPES = "SHOW_CREATE_RECIPES";
 export const GET_ALL_DIETS = "GET_ALL_DIETS";
 export const POST_CREATE_RECIPE = "POST_CREATE_RECIPE";
 export const GET_RECIPE_BY_ID = "GET_RECIPE_BY_ID";
+export const SET_CURRENT_FILTERS = "SET_CURRENT_FILTERS";
 
 const URLBACKEND = 'http://localhost:3001'
 
@@ -28,10 +28,6 @@ export function getRecipeByName(name) {
   }
 }
 
-export function showCreateRecipes(openOrClosed) {
-  return ({ type: SHOW_CREATE_RECIPES, payload: openOrClosed })
-}
-
 export function getAllDiets() {
   return async function (dispatch) {
     return fetch(`${URLBACKEND}/diets`)
@@ -42,19 +38,6 @@ export function getAllDiets() {
   }
 }
 
-// export function postCreateRecipe(data) {
-//   return async function (dispatch) {
-//     return fetch(`${URLBACKEND}/recipes`, {
-//       method: 'POST',
-//       body: JSON.stringify(data)
-//     })
-//       .then(res => res.json())
-//       .then(json => {
-//         dispatch({ type: POST_CREATE_RECIPE, payload: json })
-//       })
-//   }
-// }
-
 export function postCreateRecipe(data) {
   return async function (dispatch) {
     const response = await axios.post(`${URLBACKEND}/recipes`, { ...data })
@@ -62,9 +45,16 @@ export function postCreateRecipe(data) {
   }
 }
 
-
-
-export function getRecipeById() {
-
+export function getRecipeById(id) {
+  return async function (dispatch) {
+    return fetch(`${URLBACKEND}/recipes/${id}`)
+      .then(res => res.json())
+      .then(json => {
+        dispatch({ type: GET_RECIPE_BY_ID, payload: json })
+      })
+  }
 }
 
+export function setCurrentFilters(filter) {
+  return { type: SET_CURRENT_FILTERS, payload: filter }
+}
