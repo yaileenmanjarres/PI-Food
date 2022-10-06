@@ -17,8 +17,6 @@ select {
   border: 0;
   width: 120px;
   background-color: var(--tertiary-color);
-  /* position: absolute;
-  top: 0; */
 }
 
 .filter {

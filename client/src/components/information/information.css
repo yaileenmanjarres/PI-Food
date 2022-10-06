@@ -1,5 +1,4 @@
-
-.opacity-information {
+.opacity-modal {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,31 +8,73 @@
   width: 100%;
 }
 
-.information {
-  display: block;
-  align-items: center;
-  justify-content: center;
-  height: 700px;
-  width: 980px;
+.modal {
   background-color: white;
   border-radius: 5px;
- padding: 20px;
+  height: 700px;
+  width: 980px;
+}
+
+.title-container {
+  display: flex;
+  justify-content: space-between;
+  height: 30px;
+  width: 950px;
+  margin: 20px;
 }
 
 .title-detail {
-  height: 50px;
-  width: 500px;
-  background-color: red;
+  color: var(--secondary-color);
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.close-link {
+  color: var(--secondary-color);
+  padding-right: 20px;
+}
+
+.close-link:link {
+  text-decoration: none;
+}
+
+.modal-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 980px;
+}
+
+.container-one {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 600px;
 }
 
 .image-detail {
-  height: 200px;
-  width: 300px;
-  background-color: blue;
+  width: 312px;
 }
 
 .diets-detail {
-  height: 100px;
-  width: 300px;
-  background-color: green;
+
+  height: 50px;
+}
+
+.healthScore-detail {
+
+  height: 50px;
+  width: 490px;
+}
+
+.container-two {
+  overflow: scroll;
+  height: 450px;
+  width: 490px;
+  padding: 20px;
+}
+
+b {
+  color: var(--primary-color);
 }

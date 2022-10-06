@@ -81,12 +81,11 @@ function Form() {
             <span >
               Create Recipe
             </span>
-            <Link to={'/explore'}>
-              <span id='close-icon'>
+            <Link className='close-link' to={'/explore'}>
+              <span >
                 ✖
               </span>
             </Link>
-
           </div>
 
           <form onChange={handleFormChange}>
