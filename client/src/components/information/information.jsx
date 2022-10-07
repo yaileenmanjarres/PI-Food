@@ -20,8 +20,6 @@ function Modal() {
     summaryDiv.innerHTML = selectedRecipe.summary
   }
 
-  console.log(selectedRecipe);
-
   return (
 
     <div className='opacity-modal'>
@@ -41,7 +39,7 @@ function Modal() {
 
         <div className='modal-container'>
           <div className='container-one'>
-            <img src={selectedRecipe.image} className='image-detail' />
+            <img alt='' src={selectedRecipe.image} className='image-detail' />
             <div className='diets-detail'> {
               selectedRecipe.diets && selectedRecipe.diets.length > 0 && selectedRecipe.diets.map((diet, index) =>
                 <span className={`diet ${selectedRecipe.type === 'api' ? diet : diet.name}`} key={index}>

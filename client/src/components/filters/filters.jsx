@@ -43,11 +43,13 @@ function Filters() {
 
     if (property === 'alphabetically') {
       newFilters.healthScore = 'none'
+      document.getElementById('healthScore').value = 'none'
     }
+    
     if (property === 'healthScore') {
       newFilters.alphabetically = 'none'
+      document.getElementById('alphabetically').value = 'none'
     }
-
     dispatch(setCurrentFilters(newFilters))
   }
 
@@ -59,7 +61,7 @@ function Filters() {
             return (
               <div className='filter' key={filter.title}>
                 <span>{filter.title} </span>
-                <select onChange={handleChange} name={filter.name}>
+                <select onChange={handleChange} id={filter.name} name={filter.name}>
                   {
                     filter.options.map(option => <option key={option}> {option} </option>)
                   }
