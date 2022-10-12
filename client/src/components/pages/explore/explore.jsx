@@ -5,7 +5,7 @@ import './explore.css'
 import Navbar from '../../navbar/navbar'
 import Filters from '../../filters/filters'
 import Views from '../../views/views'
-import Modal from '../../information/information'
+import Modal from '../../modal/modal'
 import Pagination from '../../pagination/pagination'
 import Footer from '../../footer/footer'
 import Form from "../../form/form";
@@ -14,7 +14,8 @@ class Explore extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: 1
+      currentPage: 1,
+      paginationNumber: 0
     }
   }
 
@@ -24,22 +25,40 @@ class Explore extends React.Component {
   }
 
   changePage(page) {
-    this.setState({ currentPage: page })
+    this.setState(state => ({
+      ...state,
+      currentPage: page
+    }))
+  }
+
+  handlePagination(num) {
+    const numberOfPages = Math.ceil(num / 9) 
+    if (this.state.currentPage <= numberOfPages) {
+      this.setState(state => ({
+        ...state,
+        paginationNumber: numberOfPages
+      }))
+    } else {
+      this.setState({
+        currentPage: 1,
+        paginationNumber: numberOfPages
+      })
+      
+    }
   }
 
   render() {
-    const numberOfPages = Math.ceil(this.props.recipes.length / 9)
     const showModal = this.props.showModal
 
     return (
       <div id="main">
         <Navbar />
         <Filters />
-        <Views currentPage={this.state.currentPage} />
+        <Views currentPage={this.state.currentPage} handlePagination={this.handlePagination.bind(this)} />
         {
           showModal && <Modal />
         }
-        <Pagination pages={numberOfPages} changePage={this.changePage.bind(this)} currentPage={this.state.currentPage} />
+        <Pagination pages={this.state.paginationNumber} changePage={this.changePage.bind(this)} currentPage={this.state.currentPage} />
         <Footer />
         {this.props.showCreateRecipes && <Form />}
       </div>

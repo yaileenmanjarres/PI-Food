@@ -3,7 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import Cover from '../components/pages/cover/cover';
 import Explore from '../components/pages/explore/explore';
 import Form from '../components/form/form';
-import Modal from '../components/information/information';
+import Modal from '../components/modal/modal';
 
 function App() {
 

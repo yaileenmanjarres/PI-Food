@@ -8,8 +8,8 @@ const mockRecipes = require('../mocks/recipes.mock.json');
 
 async function getRecipes() {
   try {
-    // const response = await axios.get(`${API_BASE_URL}/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`);
-    const response = mockRecipes;
+    const response = await axios.get(`${API_BASE_URL}/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`);
+    // const response = mockRecipes;
     const recipes = response.data.results.map(recipe => {
       return ({
         id: recipe.id.toString(),
@@ -35,24 +35,6 @@ const seedDatabase = async () => {
   await Diet.bulkCreate(mockDiets)
 
   recipes.forEach(async (recipe) => {
-    if (recipe.vegetarian) {
-      const vegetarianDiet = mockDiets.find(mockDiet => mockDiet.name === 'vegetarian')
-      if (vegetarianDiet) {
-        await RecipesDiets.create({
-          recipeId: recipe.id,
-          dietId: vegetarianDiet.id
-        })
-      }
-    }
-    if (recipe.lowFodmap) {
-      const lowFodmapDiet = mockDiets.find(mockDiet => mockDiet.name === 'low fod map')
-      if (lowFodmapDiet) {
-        await RecipesDiets.create({
-          recipeId: recipe.id,
-          dietId: lowFodmapDiet.id
-        })
-      }
-    }
     if (recipe.diets && recipe.diets.length > 0) {
       recipe.diets.forEach(async (diet) => {
         const foundDiet = mockDiets.find(mockDiet => mockDiet.name === diet)

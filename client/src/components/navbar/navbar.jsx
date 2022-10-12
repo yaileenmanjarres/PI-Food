@@ -16,6 +16,9 @@ function Navbar() {
   }
 
   const backToHome = () => {
+    document.getElementById('alphabetically').value = 'none'
+    document.getElementById('healthScore').value = 'none'
+    document.getElementById('diet').value = 'all'
     dispatch(getAllRecipes())
   }
 

@@ -16,7 +16,7 @@ function healthScoreASC(x, y) {
 }
 
 
-function Views({ currentPage }) {
+function Views({ currentPage, handlePagination }) {
   const allRecipes = useSelector(state => state.recipes)
   const currentFilters = useSelector(state => state.currentFilters)
   const [orderedRecipes, setOrderedRecipes] = useState(allRecipes)
@@ -77,6 +77,7 @@ function Views({ currentPage }) {
     } else {
       setDisplayedRecipes(orderedRecipes.slice((9 * clicked) - 9, 9 * clicked));
     }
+    handlePagination(orderedRecipes.length)
   }, [orderedRecipes])
 
   useEffect(() => {

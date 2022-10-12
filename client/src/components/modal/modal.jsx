@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRecipeById } from '../../redux/actions/actions'
-import './information.css'
+import './modal.css'
 import { useEffect } from 'react';
 
 function Modal() {
@@ -42,14 +42,19 @@ function Modal() {
             <img alt='' src={selectedRecipe.image} className='image-detail' />
             <div className='diets-detail'> {
               selectedRecipe.diets && selectedRecipe.diets.length > 0 && selectedRecipe.diets.map((diet, index) =>
-                <span className={`diet ${selectedRecipe.type === 'api' ? diet : diet.name}`} key={index}>
+                <span className={`diet ${selectedRecipe.type === 'api' ? diet.split(' ').join('') : diet.name.split(' ').join('')}`} key={index}>
                   {
                     selectedRecipe.type === 'api' ? diet : diet.name
                   }
                 </span>
               )}
             </div>
-            <div className='healthScore-detail'> {selectedRecipe.healthScore}
+            <div className='healthScore-detail'>
+              <span> 
+                <p className='title-healthScore'>Health score:</p>
+                <b className='subtitle-healthScore'>{selectedRecipe.healthScore}%</b>
+              </span>
+
             </div>
           </div>
 
@@ -58,8 +63,8 @@ function Modal() {
             <div className='summary-detail' id='summary'>
             </div>
             <div className='steps-detail'> {
-              selectedRecipe.steps && selectedRecipe.steps.length > 0 && selectedRecipe.steps.map(step =>
-                <div>
+              selectedRecipe.steps && selectedRecipe.steps.length > 0 && selectedRecipe.steps.map((step, index) =>
+                <div key={index}>
                   <span>
                     <b>Step {step.number}: </b>
                   </span>
