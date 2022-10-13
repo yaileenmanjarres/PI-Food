@@ -89,7 +89,7 @@ function Views({ currentPage, handlePagination }) {
   }, [currentPage, orderedRecipes, handlePageChange])
 
   return (
-    <div className='views-container'>
+    <div className='views-container' data-testid='views'>
       <div className='views'>
         {
           displayedRecipes.map((recipe, index) => (

@@ -27,19 +27,19 @@
   height: 100%;
 }
 
+form {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
 #form-title {
   display: flex;
   justify-content: space-between;
   font-weight: bold;
   font-size: 18px;
   color: var(--primary-color);
-}
-
-form {
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  row-gap: 10px;
 }
 
 .label-validation {
@@ -85,6 +85,8 @@ form input:focus {
 }
 
 #save-button {
+  text-align: center;
+  text-decoration: none;
   background-color: var(--primary-color);
   border: none;
   color: white;
