@@ -1,5 +1,5 @@
 .footer-container {
-  background-color: black;
+  background-color: var(--secondary-color);
   justify-content: center;
   align-items: center;
   display: flex;
@@ -11,7 +11,7 @@
   align-items: center;
   display: flex;
   flex-grow: 1;
-  max-width: 850px;
+  max-width: 980px;
 }
 
 .footer-copy { 

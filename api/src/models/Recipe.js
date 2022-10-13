@@ -32,6 +32,10 @@ module.exports = (sequelize) => {
         set: function(val) {
             return this.setDataValue('steps', JSON.stringify(val));
         }
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   });
 };

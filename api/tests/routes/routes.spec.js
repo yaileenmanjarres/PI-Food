@@ -6,7 +6,11 @@ const { Recipe, conn } = require('../../src/db.js');
 
 const agent = session(app);
 const recipe = {
+  id: 'id',
+  type: 'db',
   name: 'Milanea a la napolitana',
+  summary: 'summary',
+  healthScore: 100
 };
 
 describe('Recipe routes', () => {
@@ -20,5 +24,20 @@ describe('Recipe routes', () => {
     it('should get 200', () =>
       agent.get('/recipes').expect(200)
     );
+    it('should get recipes', () => {
+      agent.get('/recipes').then((res) => {
+        expect(res.body[0]).to.be.equal({
+          steps: null,
+          id: 'id',
+          type: 'db',
+          name: 'Milanea a la napolitana',
+          summary: 'summary',
+          healthScore: 100,
+          image: null,
+          diets: []
+        })
+      })
+    }
+  );
   });
 });

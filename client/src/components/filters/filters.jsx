@@ -1,44 +1,58 @@
 import './filters.css';
-
-const filters = [
-  {
-    title: 'Title 1',
-    options: [
-      'Option 1',
-      'Option 2',
-      'Option 3',
-      'Option 4'
-    ]
-  },
-  {
-    title: 'Title 2',
-    options: [
-      'Option 1',
-      'Option 2',
-      'Option 3',
-      'Option 4',
-      'Option 5',
-      'Option 6',
-    ]
-  },
-  {
-    title: 'Title 3',
-    options: [
-      'Option 1',
-      'Option 2'
-    ]
-  },
-  {
-    title: 'Title 4',
-    options: [
-      'Option 1',
-      'Option 2',
-      'Option 3'
-    ]
-  },
-]
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentFilters } from '../../redux/actions/actions';
 
 function Filters() {
+  const dispatch = useDispatch()
+  const diets = useSelector(state => state.diets).map(diet => diet.name)
+  const currentFilters = useSelector(state => state.currentFilters)
+
+  const filters = [
+    {
+      name: 'alphabetically',
+      title: 'Order alphabetically',
+      options: [
+        'none',
+        'A - Z',
+        'Z - A'
+      ]
+    },
+    {
+      name: 'healthScore',
+      title: 'Order by health score',
+      options: [
+        'none',
+        'Ascendent',
+        'Descendent'
+      ]
+    },
+    {
+      name: 'diet',
+      title: 'Filter by diet',
+      options: ['all'].concat(diets)
+    }
+  ]
+
+  const handleChange = (event) => {
+    const property = event.target.name
+
+    const newFilters = { 
+      ...currentFilters,
+      [property]: event.target.value
+    }
+
+    if (property === 'alphabetically') {
+      newFilters.healthScore = 'none'
+      document.getElementById('healthScore').value = 'none'
+    }
+    
+    if (property === 'healthScore') {
+      newFilters.alphabetically = 'none'
+      document.getElementById('alphabetically').value = 'none'
+    }
+    dispatch(setCurrentFilters(newFilters))
+  }
+
   return (
     <div className='filters-container' >
       <div className='filters'>
@@ -46,8 +60,8 @@ function Filters() {
           filters.map(filter => {
             return (
               <div className='filter' key={filter.title}>
-                <select>
-                  <option> {filter.title}  </option>
+                <span>{filter.title} </span>
+                <select onChange={handleChange} id={filter.name} name={filter.name}>
                   {
                     filter.options.map(option => <option key={option}> {option} </option>)
                   }

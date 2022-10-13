@@ -1,55 +1,103 @@
+import { useEffect, useState, useCallback } from 'react'
+import { useSelector } from "react-redux"
 import './views.css';
 import Card from '../card/card'
 
-const cards = [
-  {
-    title: 'card 1',
-    url: 'https://img.freepik.com/foto-gratis/genial-figura-triangular-geometrica-luz-laser-neon-ideal-fondos-fondos-pantalla_181624-9331.jpg?w=2000'
-  },
-  {
-    title: 'card 2',
-    url: 'https://steamuserimages-a.akamaihd.net/ugc/940586530515504757/CDDE77CB810474E1C07B945E40AE4713141AFD76/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'
-  },
-  {
-    title: 'card 3',
-    url: 'https://steamuserimages-a.akamaihd.net/ugc/940586530515504757/CDDE77CB810474E1C07B945E40AE4713141AFD76/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'
-  },
-  {
-    title: 'card 4',
-    url: 'https://steamuserimages-a.akamaihd.net/ugc/940586530515504757/CDDE77CB810474E1C07B945E40AE4713141AFD76/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'
-  },
-  {
-    title: 'card 5',
-    url: 'https://steamuserimages-a.akamaihd.net/ugc/940586530515504757/CDDE77CB810474E1C07B945E40AE4713141AFD76/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'
-  },
-  {
-    title: 'card 6',
-    url: 'https://steamuserimages-a.akamaihd.net/ugc/940586530515504757/CDDE77CB810474E1C07B945E40AE4713141AFD76/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'
-  },
-  {
-    title: 'card 7',
-    url: 'https://steamuserimages-a.akamaihd.net/ugc/940586530515504757/CDDE77CB810474E1C07B945E40AE4713141AFD76/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'
-  },
-  {
-    title: 'card 8',
-    url: 'https://steamuserimages-a.akamaihd.net/ugc/940586530515504757/CDDE77CB810474E1C07B945E40AE4713141AFD76/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'
-  },
-  {
-    title: 'card 9',
-    url: 'https://steamuserimages-a.akamaihd.net/ugc/940586530515504757/CDDE77CB810474E1C07B945E40AE4713141AFD76/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'
-  },
-  {
-    title: 'card 10',
-    url: 'https://steamuserimages-a.akamaihd.net/ugc/940586530515504757/CDDE77CB810474E1C07B945E40AE4713141AFD76/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'
-  }
-]
+function alphabeticallyASC(x, y) {
+  if (x.name < y.name) return -1
+  if (x.name > y.name) return 1
+  return 0
+}
 
-function Views() {
+function healthScoreASC(x, y) {
+  if (x.healthScore < y.healthScore) return -1
+  if (x.healthScore > y.healthScore) return 1
+  return 0
+}
+
+
+function Views({ currentPage, handlePagination }) {
+  const allRecipes = useSelector(state => state.recipes)
+  const currentFilters = useSelector(state => state.currentFilters)
+  const [orderedRecipes, setOrderedRecipes] = useState(allRecipes)
+  const [displayedRecipes, setDisplayedRecipes] = useState(orderedRecipes.slice(0, 9));
+
+  useEffect(() => {
+    if (currentFilters.diet !== 'all') {
+      let ordered = []
+      const filtered = allRecipes.filter(recipe => {
+        if (recipe.type === 'api') {
+          return recipe.diets.includes(currentFilters.diet)
+        } else {
+          const foundDiet = recipe.diets.find(diet => diet.name === currentFilters.diet)
+          return foundDiet ? true : false
+        }
+      })
+
+      if (currentFilters.alphabetically === 'A - Z') {
+        ordered = filtered.sort(alphabeticallyASC)
+      }
+      else if (currentFilters.alphabetically === 'Z - A') {
+        ordered = filtered.sort(alphabeticallyASC).reverse()
+      }
+      else if (currentFilters.healthScore === 'Ascendent') {
+        ordered = filtered.sort(healthScoreASC)
+      }
+      else if (currentFilters.healthScore === 'Descendent') {
+        ordered = filtered.sort(healthScoreASC).reverse()
+      } else {
+        ordered = filtered
+      }
+      setOrderedRecipes(ordered)
+
+    } else {
+      let ordered = []
+
+      if (currentFilters.alphabetically === 'A - Z') {
+        ordered = [...allRecipes].sort(alphabeticallyASC)
+      }
+      else if (currentFilters.alphabetically === 'Z - A') {
+        ordered = [...allRecipes].sort(alphabeticallyASC).reverse()
+      }
+      else if (currentFilters.healthScore === 'Ascendent') {
+        ordered = [...allRecipes].sort(healthScoreASC)
+      }
+      else if (currentFilters.healthScore === 'Descendent') {
+        ordered = [...allRecipes].sort(healthScoreASC).reverse()
+      } else {
+        ordered = [...allRecipes]
+      }
+      setOrderedRecipes(ordered)
+    }
+  }, [currentFilters])
+
+  const handlePageChange = useCallback((clicked) => {
+    if (clicked === 1) {
+      setDisplayedRecipes(orderedRecipes.slice(0, 9));
+    } else {
+      setDisplayedRecipes(orderedRecipes.slice((9 * clicked) - 9, 9 * clicked));
+    }
+    handlePagination(orderedRecipes.length)
+  }, [orderedRecipes])
+
+  useEffect(() => {
+    setOrderedRecipes(allRecipes)
+  }, [allRecipes])
+
+  useEffect(() => {
+    handlePageChange(currentPage)
+  }, [currentPage, orderedRecipes, handlePageChange])
+
   return (
-    <div className='views-container'>
-      <div className='views'> 
+    <div className='views-container' data-testid='views'>
+      <div className='views'>
         {
-          cards.map((card, index) => <Card key={index} title={card.title} image={card.url} />)
+          displayedRecipes.map((recipe, index) => (
+            <Card
+              key={index}
+              {...recipe}
+            />
+          ))
         }
       </div>
     </div>

@@ -3,15 +3,12 @@ const { Router, response } = require('express');
 const { conn } = require('../db');
 const { Op } = require("sequelize");
 const { Recipe, Diet, RecipesDiets } = conn.models;
-const { RECIPES_API } = process.env;
-
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');
-
+const { API_KEY, API_BASE_URL } = process.env;
 const router = Router();
 
-const attributes = ['id', 'type', 'name', 'summary', 'healthScore', 'steps']
-/* OBTENER TODOS LAS RECETAS O UNA RECETA POR NOMBRE */
+const attributes = ['id', 'type', 'name', 'summary', 'healthScore', 'steps', 'image']
+
+/* OBTENER TODAS LAS RECETAS O UNA RECETA POR NOMBRE */
 router.get('/recipes', async (req, res) => {
   const { name } = req.query;
 
@@ -19,14 +16,16 @@ router.get('/recipes', async (req, res) => {
     const foundDatabaseRecipes = await Recipe.findAll({
       attributes,
       where: {
-        name: { [Op.like]: `%${name}%` || name } 
+        name: { [Op.like]: `%${name}%` || name }
       },
       include: {
         attributes: ['id', 'name'],
         model: Diet
       }
     })
-    const apiResponse = await axios.get(`${RECIPES_API}&query=${name}`);
+
+    const apiResponse = await axios.get(`${API_BASE_URL}/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100&query=${name}`);
+
     const foundAPIRecipes = apiResponse.data.results.map(recipe => {
       return ({
         id: recipe.id.toString(),
@@ -35,7 +34,8 @@ router.get('/recipes', async (req, res) => {
         summary: recipe.summary,
         healthScore: recipe.healthScore,
         steps: recipe.analyzedInstructions[0] ? recipe.analyzedInstructions[0].steps : [],
-        diets: recipe.diets
+        diets: recipe.diets,
+        image: recipe.image
       })
     })
 
@@ -45,9 +45,7 @@ router.get('/recipes', async (req, res) => {
     })
 
     const response = foundDatabaseRecipes.concat(filtered)
-
     res.json(response)
-
   } else {
     const allRecipes = await Recipe.findAll({
       attributes,
@@ -55,6 +53,7 @@ router.get('/recipes', async (req, res) => {
         model: Diet
       }
     })
+
     res.json(allRecipes)
   }
 })
@@ -63,22 +62,37 @@ router.get('/recipes', async (req, res) => {
 router.get('/recipes/:id', async (req, res) => {
   const { id } = req.params;
   if (id) {
-    const recipeId = await Recipe.findOne({
+    const databaseResponse = await Recipe.findOne({
       attributes,
       where: {
-        id: id
+        id: id.toString()
       },
       include: {
         model: Diet
       }
     })
-    res.json(recipeId)
+    if (databaseResponse) {
+      res.json(databaseResponse)
+    } else {
+      const apiResponse = await axios.get(`${API_BASE_URL}/${id.toString()}/information?apiKey=${API_KEY}`);
+      const formatted = {
+        id: apiResponse.data.id.toString(),
+        type: 'api',
+        name: apiResponse.data.title,
+        summary: apiResponse.data.summary,
+        healthScore: apiResponse.data.healthScore,
+        steps: apiResponse.data.analyzedInstructions[0] ? apiResponse.data.analyzedInstructions[0].steps : [],
+        diets: apiResponse.data.diets,
+        image: apiResponse.data.image
+      }
+      res.json(formatted)
+    }
   }
 })
 
 /* CREAR UNA RECETA */
 router.post('/recipes', async (req, res) => {
-  const { name, summary, healthScore, steps, diets } = req.body
+  const { name, summary, healthScore, steps, diets, image } = req.body
   const count = await Recipe.count() + 1
   const newId = `C-${count}`
   const createdRecipe = await Recipe.create({
@@ -87,7 +101,8 @@ router.post('/recipes', async (req, res) => {
     name,
     summary,
     healthScore,
-    steps
+    steps,
+    image
   })
   diets.forEach(async (diet) => {
     await RecipesDiets.create({

@@ -1,13 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+:root {
+  --body-font: 'Poppins', sans-serif;
+  --text-color: #5C8D89;
+  --primary-color: #206A5D;
+  --secondary-color: #4E8D7C;
+  --tertiary-color: #F4F9F4;
+  --quaternary-color: rgb(241, 243, 245);
+
+  --text-title: 14px;
+  --text-subtitle: 11px;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--body-font)
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+iframe {
+  pointer-events: none;
+}
+
+
+/* diest styles */
+.diet {
+  border-radius: 3px;
+  padding: 0 4px;
+}
+
+.glutenfree {
+  border: 1px solid rgb(0, 166, 255);
+  color: rgb(0, 166, 255);
+}
+
+.ketogenic {
+  border: 1px solid rgb(255, 0, 0);
+  color: rgb(255, 0, 0);
+}
+
+.lactoovovegetarian {
+  border: 1px solid rgb(168, 168, 168);
+  color: rgb(168, 168, 168);
+}
+
+.vegan {
+  border: 1px solid rgb(18, 159, 46);
+  color: rgb(18, 159, 46);
+}
+
+.pescatarian {
+  border: 1px solid rgb(54, 151, 241);
+  color: rgb(54, 151, 241);
+}
+
+.paleolithic {
+  border: 1px solid orange;
+  color: orange;
+}
+
+.primal {
+  border: 1px solid rgb(223, 21, 21);
+  color: rgb(223, 21, 21);
+}
+
+.whole30 {
+  border: 1px solid rgb(255, 217, 0);
+  color: rgb(255, 217, 0);
+}
+
+.dairyfree {
+  border: 1px solid rgb(86, 86, 86);
+  color: rgb(86, 86, 86);
+}
+
+.fodmapfriendly {
+  border: 1px solid rgb(15, 220, 97);
+  color: rgb(15, 220, 97);
 }
