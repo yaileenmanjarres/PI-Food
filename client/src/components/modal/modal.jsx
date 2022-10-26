@@ -9,7 +9,7 @@ function Modal() {
   const dispatch = useDispatch()
 
   const selectedRecipe = useSelector(state => state.selectedRecipe)
-
+  
   useEffect(() => {
     dispatch(getRecipeById(id))
   }, [id, dispatch])
