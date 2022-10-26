@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { postCreateRecipe } from '../../redux/actions/actions'
 import { Link, useHistory } from "react-router-dom"
@@ -13,7 +13,8 @@ function Form() {
   const history = useHistory()
   const dispatch = useDispatch()
   const allDiets = useSelector(state => state.diets)
-  const [newSteps, setNewSteps] = useState([])
+  const [newSteps, setNewSteps] = useState([template])
+  const [disableAddStep, setDisableAddStep] = useState(true)
   const [fields, setFields] = useState({
     type: 'db',
     name: '',
@@ -29,15 +30,47 @@ function Form() {
     setNewSteps(state => state.concat([template]))
   }
 
+  const validateSteps = (event) => {
+    if (event && /^\s/g.test(event.target.value)) {
+      event.target.value = event.target.value.replace(/^\s+/, '')
+      return
+    }
+    const allStepsTitles = Array.from(document.getElementsByClassName('textarea-step'))
+    const stepsFull = allStepsTitles.every(title => title.value.length > 0)
+    setDisableAddStep(stepsFull)
+  }
+
+  useEffect(() => {
+    validateSteps()
+  }, [newSteps])
+
+  const pushStepsToFields = () => {
+    const allStepsTitles = document.getElementsByClassName('textarea-step')
+    const stepsValues = newSteps.map((step, index) => {
+      return {
+        number: index + 1,
+        step: allStepsTitles[index].value
+      }
+    })
+    const fieldsWithSteps = fields
+    fieldsWithSteps.steps = stepsValues
+    return fieldsWithSteps
+  }
+
   const onSave = (event) => {
     event.preventDefault()
-    dispatch(postCreateRecipe(fields))
+    pushStepsToFields()
+    dispatch(postCreateRecipe(pushStepsToFields()))
     setTimeout(() => history.push('/explore'), 300)
   }
 
   const handleFormChange = (event) => {
     const property = event.target.id
     if (['name', 'image', 'summary', 'healthScore'].includes(property)) {
+      if (/^\s/g.test(event.target.value)) {
+        event.target.value = event.target.value.replace(/^\s+/, '')
+        return
+      }
       setFields(state => ({
         ...state,
         [property]: property === 'healthScore' ? parseInt(event.target.value) : event.target.value
@@ -68,7 +101,7 @@ function Form() {
       fields.summary.length > 0 &&
       fields.healthScore > 0 &&
       fields.diets.length > 0 &&
-      newSteps.length > 0
+      disableAddStep
     )
   }
 
@@ -124,7 +157,7 @@ function Form() {
             <div className="label-validation">
               <label>Steps:</label>
               {
-                newSteps.length === 0 ? <span className="validation-msg">add at least 1 step</span> : null
+                !disableAddStep ? <span className="validation-msg">all steps must be filled</span> : null
               }
             </div>
             <div className="steps-container">
@@ -132,13 +165,12 @@ function Form() {
                 newSteps.map((newStep, index) => (
                   <div className="recipe-step" key={index}>
                     <label className="step-title">Step {index + 1}</label>
-                    <textarea className="step-input textarea" rows={2} placeholder={newStep.step} />
-                    <input className="step-input" type="text" placeholder={newStep.ingredients.map(item => item.name)} />
+                    <textarea className="step-input textarea textarea-step" rows={2} placeholder={newStep.step} onChange={validateSteps}/>
                   </div>
                 ))
               }
               <div>
-                <button onClick={addStep}>
+                <button onClick={addStep} disabled={!disableAddStep}>
                   Add Step
                 </button>
               </div>
